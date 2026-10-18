@@ -1,0 +1,45 @@
+<?php
+include '../koneksi/koneksi.php';
+
+if(isset($_GET['id'])) {
+  $id = $_GET['id'];
+  
+  // Ambil data pengguna berdasarkan id
+  $sql = "SELECT * FROM tb_pengguna WHERE id = '$id'";
+  $query = mysqli_query($db, $sql);
+  $data = mysqli_fetch_assoc($query);
+  
+  if(!$data) {
+    echo "Pengguna tidak ditemukan.";
+    exit;
+  }
+}
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $id = $_POST['id'];
+  $nama = $_POST['nama'];
+  $email = $_POST['email'];
+  
+  // Update data pengguna
+  $sql = "UPDATE tb_pengguna SET nama='$nama', email='$email' WHERE id='$id'";
+  if(mysqli_query($db, $sql)) {
+    echo "Data pengguna berhasil diperbarui.";
+    echo "<a href='datapengguna.php'>Kembali ke daftar pengguna</a>";
+    exit;
+  } else {
+    echo "Error: " . mysqli_error($db);
+  }
+}
+?>
+
+<h2>Edit Pengguna</h2>
+<form method="post">
+  <input type="hidden" name="id" value="<?= $data['id'] ?>">
+  <label>Nama:</label><br>
+  <input type="text" name="nama" value="<?= $data['nama'] ?>" required><br><br>
+  
+  <label>Email:</label><br>
+  <input type="email" name="email" value="<?= $data['email'] ?>" required><br><br>
+  
+  <button type="submit">Simpan</button>
+</form>

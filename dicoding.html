@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aplikasi Pengelolaan Data</title>
+  <script>
+    // Fungsi untuk menyimpan data ke Web Storage
+    function simpanData() {
+      var data = document.getElementById('dataInput').value;
+      if (data) {
+        localStorage.setItem('data', data);
+        tampilkanData();
+      } else {
+        alert('Masukkan data terlebih dahulu');
+      }
+    }
+
+    // Fungsi untuk menampilkan data dari Web Storage
+    function tampilkanData() {
+      var data = localStorage.getItem('data');
+      if (data) {
+        document.getElementById('dataDisplay').innerText = 'Data yang disimpan: ' + data;
+      } else {
+        document.getElementById('dataDisplay').innerText = 'Tidak ada data yang disimpan';
+      }
+    }
+
+    // Fungsi untuk menghapus data dari Web Storage
+    function hapusData() {
+      localStorage.removeItem('data');
+      tampilkanData();
+    }
+  </script>
+</head>
+<body>
+  <h2>Aplikasi Pengelolaan Data</h2>
+  <input type="text" id="dataInput" placeholder="Masukkan data">
+  <button onclick="simpanData()">Simpan</button>
+  <button onclick="hapusData()">Hapus</button>
+  <div id="dataDisplay"></div>
+  <script>
+    // Panggil fungsi tampilkanData saat halaman dimuat
+    tampilkanData();
+  </script>
+</body>
+</html>
